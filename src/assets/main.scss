@@ -1,0 +1,15 @@
+@font-face {
+  font-family: "noto-sans";
+  src: url("/fonts/Noto_Sans_KR/NotoSansKR-VariableFont_wght.ttf");
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  font-family: "noto-sans", "Lucida Sans", "Lucida Sans Regular",
+    "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+    user-select: none;
+}
