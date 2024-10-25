@@ -1,12 +1,16 @@
+import { DEFAULT_ACCOUNT_BOOK_NAME } from "@common/config";
 import { AccountBook } from "./AccountBook";
 
 export class Manager {
-  defaultBookName: string = "my account";
+  defaultBookName: string = DEFAULT_ACCOUNT_BOOK_NAME;
   accountBooks: Map<string, AccountBook> = new Map();
 
   constructor(bookManager?: Manager) {
     if (bookManager) {
-      const defaultBookName = bookManager.defaultBookName;
+      const defaultBookName =
+        DEFAULT_ACCOUNT_BOOK_NAME !== bookManager.defaultBookName
+          ? DEFAULT_ACCOUNT_BOOK_NAME
+          : bookManager.defaultBookName;
       const accountBooks = bookManager.accountBooks;
 
       this.defaultBookName = defaultBookName;
@@ -75,6 +79,11 @@ export class Manager {
   }
 
   rename(originName: string, rename: string) {
+    if (this.accountBooks.has(rename)) {
+      throw new TypeError("already exists account book label", {
+        cause: rename,
+      });
+    }
     const accountBook = this.accountBooks.get(originName);
     if (accountBook) {
       this.accountBooks.delete(originName);

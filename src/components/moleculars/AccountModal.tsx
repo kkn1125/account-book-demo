@@ -33,13 +33,13 @@ const AccountModal: React.FC<AccountModalProps> = ({ label }) => {
   });
   const firstInputRef = useRef<HTMLInputElement>(null);
   const { addAccount } = useAccountBook();
+  const [open, setOpen] = useState(false);
   const [account, setAccount] = useState<Pick<Account, IncludeProps>>({
     purpose: "",
     cost: 0,
     inOut: InOut.Out,
     memo: "",
   });
-  const [open, setOpen] = useState(false);
 
   const handleToggleOpen = () => {
     setOpen((open) => !open);

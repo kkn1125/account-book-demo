@@ -24,6 +24,7 @@ const RenameAccountBook: React.FC<RenameAccountBookProps> = ({ value }) => {
   const [openRename, setOpenRename] = useState(false);
   const [originName, setOriginName] = useState("");
   const [rename, setRename] = useState("");
+  const [error, setError] = useState("");
   const handleOpenRename = () => {
     const label = [...managerState.accountBooks.keys()][value];
 
@@ -43,12 +44,18 @@ const RenameAccountBook: React.FC<RenameAccountBookProps> = ({ value }) => {
     setRename(e.target.value);
   };
 
-  const handleRename = () => {
+  const handleRename = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (rename !== "") {
       decorate((managerState) => {
-        managerState.rename(originName, rename);
+        try {
+          managerState.rename(originName, rename);
+          handleCloseRename();
+          setError("");
+        } catch {
+          setError("already exists account book label");
+        }
       });
-      handleCloseRename();
     }
   };
 
@@ -75,6 +82,8 @@ const RenameAccountBook: React.FC<RenameAccountBookProps> = ({ value }) => {
                 size='small'
                 value={rename}
                 autoFocus
+                error={error !== ""}
+                helperText={error}
                 onChange={handleChangeRename}
               />
               <Button variant='contained' type='submit'>

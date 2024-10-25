@@ -7,3 +7,6 @@ export const BRAND_NAME = process.env.BRAND_NAME;
 export const MODE = process.env.MODE;
 export const HOST = process.env.HOST;
 export const PORT = process.env.PORT;
+
+/* account book options */
+export const DEFAULT_ACCOUNT_BOOK_NAME = "Account Book";

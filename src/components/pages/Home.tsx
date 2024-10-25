@@ -96,7 +96,7 @@ const Home: React.FC = () => {
             scrollButtons='auto'
             aria-label='scrollable auto tabs'>
             {managerState.orderedKeys().map((label, i) => (
-              <Tab key={label} label={label} {...a11yProps(i)} />
+              <Tab key={label + i} label={label} {...a11yProps(i)} />
             ))}
           </Tabs>
         </Box>
