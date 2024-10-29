@@ -79,16 +79,15 @@ const AccountModal: React.FC<AccountModalProps> = ({ label }) => {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
+    if (account.cost <= 0 || account.purpose === "") return;
+
     addAccount({ label, account });
 
-    handleClose();
     initializeAccount();
+
+    firstInputRef.current?.focus();
     return false;
   };
-
-  useEffect(() => {
-    firstInputRef.current?.focus();
-  }, []);
 
   return (
     <Stack>
@@ -107,13 +106,16 @@ const AccountModal: React.FC<AccountModalProps> = ({ label }) => {
             }}>
             <Stack gap={2} alignItems='center'>
               <TextField
+                inputRef={firstInputRef}
                 autoFocus
-                onFocus={(e) => e.target.setSelectionRange(0, 1)}
                 size='small'
                 label='비용'
                 name='cost'
                 value={account["cost"]}
                 onChange={handleChangeValue}
+                onFocus={(e) =>
+                  e.target.setSelectionRange(0, 1)
+                }
               />
               <TextField
                 size='small'
@@ -125,6 +127,9 @@ const AccountModal: React.FC<AccountModalProps> = ({ label }) => {
                 name='purpose'
                 value={account["purpose"]}
                 onChange={handleChangeValue}
+                onFocus={(e) =>
+                  e.target.setSelectionRange(0, e.target.value.length)
+                }
               />
               <TextField
                 size='small'
@@ -132,6 +137,9 @@ const AccountModal: React.FC<AccountModalProps> = ({ label }) => {
                 name='memo'
                 value={account["memo"]}
                 onChange={handleChangeValue}
+                onFocus={(e) =>
+                  e.target.setSelectionRange(0, e.target.value.length)
+                }
               />
               <FormGroup sx={{ display: "block", whiteSpace: "nowrap" }}>
                 <FormControlLabel

@@ -15,8 +15,14 @@ export class AccountBook {
     }
   }
 
-  addAccount(account: Pick<Account, IncludeProps>) {
+  addAccount(
+    account: Pick<Account, Exclude<keyof Account, "id" | "toJSON">>
+  ) {
     this.accounts.push(new Account(account));
+  }
+
+  deleteAccount(id: string) {
+    this.accounts = this.accounts.filter((account) => account.id !== id);
   }
 
   toJSON() {
